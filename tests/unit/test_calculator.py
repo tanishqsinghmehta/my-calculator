@@ -1,36 +1,54 @@
-"""
-Unit Tests for Calculator
-Students start with 2 passing tests, then add more
-"""
 import pytest
-from src.calculator import add, divide, subtract
+from src.calculator import add, subtract, multiply, divide, power, sqrt
 
-class TestBasicOperations:
-    """Test basic arithmetic operations"""
-    
-    def test_add_positive_numbers(self):
-        """Test adding positive numbers"""
-        assert add(2, 3) == 5
-        assert add(10, 15) == 25
-    
-    def test_subtract_positive_numbers(self):
-        """Test subtracting positive numbers"""
+
+class TestAddSubtract:
+    def test_add_positive(self):
+        assert add(1, 2) == 3
+
+    def test_subtract(self):
         assert subtract(5, 3) == 2
-        assert subtract(10, 4) == 6
 
-class TestMultiplyDivideWithValidation:
-    """Test multiplication and division with input validation."""
-    
-    def test_multiply_input_validation(self):
-        """Test multiply rejects non-numeric inputs."""
-        with pytest.raises(TypeError, match="Both arguments must be numbers"):
+
+class TestMultiplyDividePowerSqrt:
+    def test_multiply_positive_numbers(self):
+        assert multiply(3, 4) == 12
+
+    def test_multiply_by_zero(self):
+        assert multiply(0, 10) == 0
+
+    def test_multiply_negative(self):
+        assert multiply(-2, 3) == -6
+
+    def test_multiply_validation(self):
+        with pytest.raises(TypeError, match="must be a number"):
             multiply("5", 3)
-        with pytest.raises(TypeError, match="Both arguments must be numbers"):
-            multiply(5, "3")
-    
-    def test_divide_input_validation(self):
-        """Test divide rejects non-numeric inputs."""
-        with pytest.raises(TypeError, match="Division requires numeric inputs"):
+
+    def test_divide_basic(self):
+        assert divide(10, 2) == 5
+
+    def test_divide_negative(self):
+        assert divide(-12, -3) == 4
+
+    def test_divide_by_zero(self):
+        with pytest.raises(ZeroDivisionError, match="Cannot divide by zero"):
+            divide(10, 0)
+
+    def test_divide_validation(self):
+        with pytest.raises(TypeError, match="must be a number"):
             divide("10", 2)
 
-# TODO: Students will add TestMultiplyDivide class
+    def test_power_basic(self):
+        assert power(2, 3) == 8
+        assert power(2, -1) == 0.5
+
+    def test_power_validation(self):
+        with pytest.raises(TypeError):
+            power("2", 3)
+
+    def test_sqrt_basic(self):
+        assert sqrt(16) == 4
+
+    def test_sqrt_negative(self):
+        with pytest.raises(ValueError):
+            sqrt(-1)
