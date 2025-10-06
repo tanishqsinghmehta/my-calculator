@@ -107,3 +107,9 @@ black src/ tests/
 bandit -r src/
 bandit -r src/ -v
 bandit -r src/ -f json -o security_report.json
+
+
+# Final verification
+Fixed YAML syntax for Bandit step.
+All GitHub Actions (pytest, pylint, bandit) passed successfully.
+CI/CD pipeline verified – ✅ success.
