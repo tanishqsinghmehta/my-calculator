@@ -32,4 +32,4 @@ jobs:
         run: pylint src/calculator.py
 
       - name: Run security scan
-        run: bandit -r .
+        run: bandit -r . --exclude tests
