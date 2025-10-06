@@ -1,41 +1,57 @@
-"""
-Calculator Module - Basic arithmetic operations
-Students will extend this with more functions
-"""
+"""Simple calculator helpers."""
 
-def add(a, b):
-    """Add two numbers together"""
+import math
+from typing import Union
+
+Number = Union[int, float]
+
+
+def _ensure_number(x, name="value"):
+    """Internal check to ensure a value is numeric."""
+    if not isinstance(x, (int, float)):
+        raise TypeError(f"{name} must be a number")
+
+
+def add(a: Number, b: Number) -> Number:
+    """Return a + b."""
+    _ensure_number(a, "a")
+    _ensure_number(b, "b")
     return a + b
 
-def subtract(a, b):
-    """Subtract b from a"""
+
+def subtract(a: Number, b: Number) -> Number:
+    """Return a - b."""
+    _ensure_number(a, "a")
+    _ensure_number(b, "b")
     return a - b
 
-def multiply(a, b):
-    """Multiply two numbers with input validation and logging."""
-    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
-        raise TypeError("Both arguments must be numbers")
-    
-    print(f"Multiplying {a} × {b}")  # Added logging
-    result = a * b
-    print(f"Result: {result}")
-    return result
 
-def divide(a, b):
-    """Divide a by b with enhanced error handling."""
-    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
-        raise TypeError("Division requires numeric inputs")
+def multiply(a: Number, b: Number) -> Number:
+    """Return a * b."""
+    _ensure_number(a, "a")
+    _ensure_number(b, "b")
+    return a * b
+
+
+def divide(a: Number, b: Number) -> float:
+    """Return a / b, raising on divide-by-zero."""
+    _ensure_number(a, "a")
+    _ensure_number(b, "b")
     if b == 0:
-        raise ValueError(f"Cannot divide {a} by zero - division by zero is undefined")
-    
-    print(f"Dividing {a} ÷ {b}")  # Added logging
-    result = a / b
-    print(f"Result: {result}")
-    return result
+        raise ZeroDivisionError("Cannot divide by zero")
+    return a / b
 
-# TODO: Students will add multiply, divide, power, sqrt functions
 
-if __name__ == "__main__":
-    print("🧮 Calculator Module")
-    print(f"2 + 3 = {add(2, 3)}")
-    print(f"5 - 2 = {subtract(5, 2)}")
+def power(a: Number, b: Number) -> float:
+    """Return a ** b."""
+    _ensure_number(a, "a")
+    _ensure_number(b, "b")
+    return a**b
+
+
+def sqrt(x: Number) -> float:
+    """Return √x."""
+    _ensure_number(x, "x")
+    if x < 0:
+        raise ValueError("Cannot take square root of negative number")
+    return math.sqrt(x)
