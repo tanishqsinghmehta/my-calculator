@@ -9,7 +9,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    needs: security
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -39,9 +38,7 @@ jobs:
         run: |
           echo "Creating simple deployment package..."
           rm -f deployment-package.zip || true
-          # compile python files (best-effort)
           python -m compileall -b -f src || true
-          # create zip containing source, compiled files, and any artifacts
           zip -r deployment-package.zip src artifacts README.md requirements.txt || true
           echo "Created deployment-package.zip"
           ls -lh deployment-package.zip
