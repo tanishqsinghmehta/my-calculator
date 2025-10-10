@@ -26,11 +26,11 @@ def calculate(operation, num1, num2=None):
             click.echo(f"Unknown operation: {operation}")
             sys.exit(1)
 
-        # Format result nicely
-        if result == int(result):
-            click.echo(int(result))
+        # ✅ Fixed formatting
+        if float(result).is_integer():
+            click.echo(str(int(result)))
         else:
-            click.echo(f"{result:.2f}")
+            click.echo(f"{result:.10g}")
 
     except ValueError as e:
         click.echo(f"Error: {e}")
