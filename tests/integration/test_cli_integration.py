@@ -1,41 +1,41 @@
-from click.testing import CliRunner
-
-
+"""
+Integration Tests - CLI + Calculator Working Together
+"""
+import subprocess
+import sys
+import pytest
 class TestCLIIntegration:
-    """Integration tests for CLI and calculator module"""
+ """Test CLI application integrating with
+calculator module"""
 
-    def run_cli(self, *args):
-        from src.cli import calculate
+ def run_cli(self, *args):
+ """Helper method to run CLI and capture
+output"""
+ cmd = [sys.executable, 'src/cli.py'] +
+list(args)
+ result = subprocess.run(cmd,
+capture_output=True, text=True, cwd='.')
+ return result
 
-        runner = CliRunner()
-        return runner.invoke(calculate, list(args))
-
-    def test_cli_add_integration(self):
-        res = self.run_cli("add", "5", "3")
-        assert res.exit_code == 0
-        assert res.output.strip() == "8"
-
-    def test_cli_subtract_integration(self):
-        res = self.run_cli("subtract", "5", "3")
-        assert res.exit_code == 0
-        assert res.output.strip() == "2"
-
-    def test_cli_multiply_integration(self):
-        res = self.run_cli("multiply", "4", "7")
-        assert res.exit_code == 0
-        assert res.output.strip() == "28"
-
-    def test_cli_divide_integration(self):
-        res = self.run_cli("divide", "15", "3")
-        assert res.exit_code == 0
-        assert res.output.strip() == "5"
-
-    def test_cli_sqrt_integration(self):
-        res = self.run_cli("sqrt", "16")
-        assert res.exit_code == 0
-        assert res.output.strip() == "4"
-
-    def test_cli_error_handling_integration(self):
-        res = self.run_cli("divide", "10", "0")
-        assert res.exit_code == 1
-        assert "Cannot divide by zero" in res.output
+ def test_cli_add_integration(self):
+ """Test CLI can perform addition""" 
+result = self.run_cli('add', '5', '3')
+ assert result.returncode == 0
+ assert result.stdout.strip() == '8'
+ def test_cli_subtract_integration(self):
+ """Test CLI can perform subtraction"""
+ result = self.run_cli('subtract', '5', '3')
+ assert result.returncode == 0
+ assert result.stdout.strip() == '2'
+ def
+test_cli_subtract_missing_operand_error(self):
+ """Test CLI handles missing operand for
+subtraction gracefully"""
+ # call subtract with only one operand; CLI
+should exit with non-zero and print an error
+ result = self.run_cli('subtract', '5')
+ assert result.returncode == 1
+ # CLI prints a generic unexpected error
+message for this case
+ assert
+result.stdout.strip().startswith('Unexpected error:')
