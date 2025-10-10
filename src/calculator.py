@@ -55,3 +55,6 @@ def sqrt(x: Number) -> float:
     if x < 0:
         raise ValueError("Cannot take square root of negative number")
     return math.sqrt(x)
+
+
+square_root = sqrt
