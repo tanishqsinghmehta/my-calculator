@@ -7,7 +7,7 @@ Example:
 
 import sys
 import click
-from src.calculator import add, subtract, multiply, divide, power, square_root
+from calculator import add, subtract, multiply, divide, square_root
 
 
 @click.command()
@@ -25,8 +25,6 @@ def calculate(operation, num1, num2=None):
             result = multiply(num1, num2)
         elif operation == "divide":
             result = divide(num1, num2)
-        elif operation == "power":
-            result = power(num1, num2)
         elif operation in ("sqrt", "square_root"):
             # Square root uses only one operand
             result = square_root(num1)
